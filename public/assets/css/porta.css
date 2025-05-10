@@ -1,0 +1,1517 @@
+/*** debug in progress ***/
+/*** improving some details ***/
+
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+
+:root {
+    --tra: all 2s ease 0s;
+    --door-blue: #80a2b3;
+    --door-white: #eef1f1;
+}
+
+* {
+    transform-style: preserve-3d;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 100vmin;
+    flex-wrap: wrap;
+    cursor: pointer;
+}
+
+body:before {
+    content: "";
+    width: 180vmin;
+    height: 180vmin;
+    position: absolute;
+    background: radial-gradient(circle at 52% 100%, #000 58vmin, #fff0 calc(65vmin + 1px) 100%), radial-gradient(circle at 50% 92%, #000 40vmin, #FF5722 50vmin, #fff0 calc(50vmin + 1px) 100%), repeating-conic-gradient(#FFF9 0%, transparent .00045%, transparent .0045%, transparent .112345%), radial-gradient(#0000, #0a123a), linear-gradient(180deg, #2000587d, #2000587d, #000, #9c27b02b), linear-gradient(0deg, #ff9800, #ff9800, #000, #009688ba);
+    animation: spin 500s linear 0s infinite;
+    z-index: -1;
+    transform: translateZ(-30vmin);
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+body:active {
+    cursor: grabbing;
+}
+
+.content {
+    width: 80vmin;
+    height: 70vmin;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
+
+.content:before,
+.content:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-origin: 100% 50%;
+    transform: rotateY(90deg);
+    right: -5vmin;
+    /*
+	--u: 0.225vmin;
+    --r1: calc(var(--u) * 3);
+    --r2: calc(var(--u) * 3.1);
+    --r3: calc(var(--u) / 10);
+    --r4: calc(var(--u) / 1.1);
+    --r5: calc(var(--u) * 1.5);
+    --r6: calc(var(--u) * 2.75);
+    --c0: #173c4f;
+    --c1: #4a4a4a;
+    --c2: #838383;
+    --c3: #cbcbcb;
+    --c4: #ffffff;
+    --gp: 50%/calc(var(--u) * 10) calc(var(--u) * 16.8);
+    background:
+        conic-gradient(from 225deg at 30% 50%, var(--c0) 0 25%, #fff0 0 100%) var(--gp),
+        conic-gradient(from 45deg at 70% 50%, var(--c0) 0 25%, #fff0 0 100%) var(--gp),
+        conic-gradient(from -45deg at 50% 17%, var(--c0) 0 25%, #fff0 0 100%) var(--gp),
+        conic-gradient(from 135deg at 50% 83%, var(--c0) 0 25%, #fff0 0 100%) var(--gp),
+        radial-gradient(circle at 100% 50%, var(--c0) var(--r1), #fff0 var(--r2) 100%) var(--gp),
+        radial-gradient(circle at 105% 55%, var(--c4) var(--r5), #fff0 var(--r6) 100%) var(--gp),
+        radial-gradient(circle at 103% 52%, var(--c1) var(--r1), #fff0 var(--r2) 100%) var(--gp),
+        radial-gradient(circle at 0% 50%, var(--c0) var(--r1), #fff0 var(--r2) 100%) var(--gp),
+        radial-gradient(circle at 15% 65%, var(--c4) var(--r3), #fff0 var(--r4) 100%) var(--gp),
+        radial-gradient(circle at 5% 55%, var(--c4) var(--r5), #fff0 var(--r6) 100%) var(--gp),
+        radial-gradient(circle at 3% 52%, var(--c1) var(--r1), #fff0 var(--r2) 100%) var(--gp),
+        radial-gradient(circle at 50% 100%, var(--c0) var(--r1), #fff0 var(--r2) 100%) var(--gp),
+        radial-gradient(circle at 53% 102%, var(--c1) var(--r1), #fff0 var(--r2) 100%) var(--gp),
+        radial-gradient(circle at 50% 0%, var(--c0) var(--r1), #fff0 var(--r2) 100%) var(--gp),
+        radial-gradient(circle at 65% 15%, var(--c4) var(--r3), #fff0 var(--r4) 100%) var(--gp),
+        radial-gradient(circle at 55% 5%, var(--c4) var(--r5), #fff0 var(--r6) 100%) var(--gp),
+        radial-gradient(circle at 53% 2%, var(--c1) var(--r1), #fff0 var(--r2) 100%) var(--gp),
+        linear-gradient(65deg, var(--c3) 40%, #ffffffdd 48% 52%, var(--c3) 60%);
+    background-color: var(--c0);
+    */
+}
+
+.content:after {
+    transform-origin: 0% 50%;
+    transform: rotateY(90deg) translateX(-80vmin);
+    right: inherit;
+    left: -4.95vmin;
+}
+
+
+.door {
+    width: 100%;
+    height: 100%;
+}
+
+.door:before {
+    content: "";
+    position: absolute;
+    width: 86.2vmin;
+    height: 66vmin;
+    transform: translate3d(0, 0, 1px);
+    left: -3.1vmin;
+    top: 2vmin;
+    box-shadow: 0 0 0.5vmin 0.25vmin #0e394f inset;
+}
+
+.cuboid {
+    --height: 70;
+    --width: 70;
+    --depth: 10;
+    --hue: 175;
+    --sat: 10%;
+    height: calc(var(--height) * 1vmin);
+    width: calc(var(--width) * 1vmin);
+    position: absolute;
+}
+
+.cuboid .side {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 100%;
+    width: 100%;
+    border-radius: 2px;
+}
+
+
+
+.cuboid .side:nth-of-type(1) {
+    transform: translate3d(-50%, -50%, calc(var(--depth) * 0.5vmin));
+    background: hsl(var(--hue), var(--sat), 60%);
+}
+
+.cuboid .side:nth-of-type(2) {
+    transform: translate3d(-50%, -50%, calc(var(--depth) * -0.5vmin)) rotateY(180deg);
+    background: hsl(var(--hue), var(--sat), 25%);
+}
+
+.cuboid .side:nth-of-type(3) {
+    width: calc(var(--depth) * 1vmin);
+    transform: translate(-50%, -50%) rotateY(90deg) translate3d(0, 0, calc(var(--width) * 0.5vmin));
+    background: hsl(var(--hue), var(--sat), 75%);
+}
+
+.cuboid .side:nth-of-type(4) {
+    width: calc(var(--depth) * 1vmin);
+    transform: translate(-50%, -50%) rotateY(-90deg) translate3d(0, 0, calc(var(--width) * 0.5vmin));
+    background: hsl(var(--hue), var(--sat), 40%);
+}
+
+.cuboid .side:nth-of-type(5) {
+    height: calc(var(--depth) * 1vmin);
+    transform: translate(-50%, -50%) rotateX(90deg) translate3d(0, 0, calc(var(--height) * 0.5vmin));
+    background: hsl(var(--hue), var(--sat), 60%);
+}
+
+.cuboid .side:nth-of-type(6) {
+    height: calc(var(--depth) * 1vmin);
+    transform: translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc(var(--height) * 0.5vmin));
+    background: hsl(var(--hue), var(--sat), 20%);
+}
+
+.door.active .cuboid.left {
+    left: -53vmin;
+}
+
+.door.active .cuboid.right {
+    left: 62vmin;
+}
+
+.door .cuboid .side:nth-of-type(1) {
+    transform: translate3d(-50%, -50%, calc(var(--depth) * 0.5vmin));
+    background: hsl(var(--hue), var(--sat), 60%);
+    clip-path: polygon(100% 0, 100% 33.33%, 75% 40%, 75% 60%, 100% 66.66%, 100% 100%, 0 100%, 0 0);
+}
+
+.door .cuboid .side:nth-of-type(2) {
+    transform: translate3d(-50%, -50%, calc(var(--depth) * -0.5vmin)) rotateY(0deg);
+    background: hsl(var(--hue), var(--sat), 25%);
+    clip-path: polygon(100% 0, 100% 33.33%, 75% 40%, 75% 60%, 100% 66.66%, 100% 100%, 0 100%, 0 0);
+}
+
+.door .cuboid .side:nth-of-type(3) {
+    width: calc(var(--depth) * 1vmin);
+    transform: translate(-225%, -50%) rotateY(90deg) translate3d(0, 0, calc(var(--width) * 0.5vmin));
+    background: hsl(var(--hue), var(--sat), 75%);
+    height: 20%;
+}
+
+.door .cuboid .side:nth-of-type(4) {
+    width: calc(var(--depth) * 1vmin);
+    transform: translate(-50%, -50%) rotateY(-90deg) translate3d(0, 0, calc(var(--width) * 0.5vmin));
+    background: hsl(var(--hue), var(--sat), 40%);
+}
+
+.door .cuboid .side:nth-of-type(5) {
+    height: calc(var(--depth) * 1vmin);
+    transform: translate(-50%, -50%) rotateX(90deg) translate3d(0, 0, calc(var(--height) * 0.5vmin));
+    background: hsl(var(--hue), var(--sat), 60%);
+}
+
+.door .cuboid .side:nth-of-type(6) {
+    height: calc(var(--depth) * 1vmin);
+    transform: translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc(var(--height) * 0.5vmin));
+    background: hsl(var(--hue), var(--sat), 20%);
+}
+
+.door .cuboid .side:nth-of-type(7) {
+    width: calc(var(--depth) * 1vmin);
+    transform: translate(-50%, -150%) rotateY(90deg) translate3d(0, 0, calc(var(--width) * 0.499vmin));
+    background: hsl(var(--hue), var(--sat), 75%);
+    height: 33.33%;
+}
+
+.door .cuboid .side:nth-of-type(8) {
+    width: calc(var(--depth) * 1vmin);
+    transform: translate(-50%, 50%) rotateY(90deg) translate3d(0, 0, calc(var(--width) * 0.499vmin));
+    background: hsl(var(--hue), var(--sat), 75%);
+    height: 33.33%;
+}
+
+.door .cuboid .side:nth-of-type(9) {
+    --pos: 148%;
+    height: calc(var(--depth) * 1vmin);
+    transform: translate(var(--pos), 195%) rotateX(90deg) rotateY(-15deg) translate3d(0, 0, calc(var(--height) * 0.5vmin));
+    background: hsl(var(--hue), var(--sat), 75%);
+    width: 25.5%;
+}
+
+.door .cuboid .side:nth-of-type(10) {
+    --pos: 96%;
+    height: calc(var(--depth) * 1vmin);
+    transform: translate(var(--pos), 50%) rotateX(90deg) rotateY(15deg) translate3d(0, 0, calc(var(--height) * 0.01vmin));
+    background: hsl(var(--hue), var(--sat), 75%);
+    width: 25.5%;
+}
+
+
+
+
+
+
+
+
+/* door drawings */
+.door .cuboid.left .side:nth-of-type(1) {
+    --lr: var(--door-white);
+    background: linear-gradient(180deg, var(--door-white) 5vmin, var(--door-white) 12vmin), linear-gradient(-90deg, #fff0 51.75vmin, var(--lr) 20vmin 100%), linear-gradient(0deg, #fff0 66.5vmin, var(--lr) 20vmin 100%), linear-gradient(180deg, #fff0 66.5vmin, var(--lr) 20vmin 100%), conic-gradient(from 180deg at 97.75% 68.5%, var(--door-blue) 0 29.125%, #fff0 29.25% 100%), conic-gradient(from 255deg at 97.75% 31.5%, #fff0 0, var(--door-blue) 0.125% 29.125%, #fff0 0 100%), linear-gradient(90deg, #fff0 51vmin, var(--lr) 20vmin 100%), var(--door-blue);
+    border-right: 1px solid #0008;
+    background-size: 22vmin 28vmin, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%, 0 0;
+}
+
+.door .cuboid.right .side:nth-of-type(1) {
+    --dr: #8fa3a2;
+    --dr: var(--door-blue);
+    background:
+        linear-gradient(90deg, #fff0 49.15vmin, var(--dr) 20vmin 100%),
+        linear-gradient(0deg, #fff0 66.5vmin, var(--dr) 20vmin 100%),
+        linear-gradient(180deg, #fff0 66.5vmin, var(--dr) 20vmin 100%),
+        linear-gradient(90deg, #fff0 19vmin, var(--door-white) 0 100%),
+        linear-gradient(195deg, #fff0 57vmin, var(--dr) calc(57vmin + 1px) 100%),
+        linear-gradient(-15deg, #fff0 57vmin, var(--dr) calc(57vmin + 1px) 100%),
+        linear-gradient(-90deg, #fff0 68.5vmin, var(--dr) 20vmin 100%),
+        var(--door-white);
+    border-left: 1px solid #0008;
+}
+
+
+
+/*** room lights ***/
+.cylinder:nth-child(11)>div:nth-of-type(5):before,
+.cylinder:nth-child(12)>div:nth-of-type(5):before,
+.cylinder:nth-child(13)>div:nth-of-type(5):before,
+.cylinder:nth-child(14)>div:nth-of-type(5):before {
+    background: repeating-linear-gradient(0deg, #fff 0 8vmin, #fff0 0 10vmin);
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 96%;
+    left: 25%;
+    border-radius: 0.2vmin;
+    box-shadow: 0 0 3.5vmin 0.05vmin #a5f5ff, 0 0 15vmin 1vmin #ffffff;
+    box-sizing: border-box;
+    filter: drop-shadow(0px 0px 6px #fff);
+}
+
+.content.active .cylinder:nth-child(11)>div:nth-of-type(5):before,
+.content.active .cylinder:nth-child(12)>div:nth-of-type(5):before,
+.content.active .cylinder:nth-child(13)>div:nth-of-type(5):before,
+.content.active .cylinder:nth-child(14)>div:nth-of-type(5):before
+{
+    background: repeating-linear-gradient(0deg,#12dd2d 0 8vmin, #fff0 0 10vmin);
+}
+
+.content.danger .cylinder:nth-child(11)>div:nth-of-type(5):before,
+.content.danger .cylinder:nth-child(12)>div:nth-of-type(5):before,
+.content.danger .cylinder:nth-child(13)>div:nth-of-type(5):before,
+.content.danger .cylinder:nth-child(14)>div:nth-of-type(5):before
+{
+    background: repeating-linear-gradient(0deg,#f0340e 0 8vmin, #fff0 0 10vmin);
+}
+
+.cylinder:nth-child(11)>div:nth-of-type(5):before,
+.cylinder:nth-child(12)>div:nth-of-type(5):before {
+    top: 5%
+}
+
+
+
+
+
+
+
+
+
+.cuboid.left {
+    left: -20vmin;
+    transition: var(--tra);
+    transform: translate3d(0vmin, 0vmin, -5vmin);
+    animation: start-left 2s ease 0s 1;
+}
+
+.cuboid.right {
+    left: 32.5vmin;
+    transition: var(--tra);
+    transform: translate3d(0vmin, 0vmin, -5vmin);
+    animation: start-right 2s ease 0s 1;
+}
+
+
+@keyframes start-left {
+    0% {
+        left: -53vmin;
+    }
+
+    100% {
+        left: -20vmin;
+    }
+}
+
+@keyframes start-right {
+    0% {
+        left: 62vmin;
+    }
+
+    100% {
+        left: 32.5vmin;
+    }
+}
+
+/* .door:hover .cuboid.left {
+    left: -53vmin;
+}
+
+.door:hover .cuboid.right {
+    left: 62vmin;
+} */
+
+
+
+
+
+
+
+.cuboid.right .side:nth-of-type(1) {
+    clip-path: polygon(25% 33.33%, 25% 0, 100% 0, 100% 100%, 25% 100%, 25% 66.66%, 0 60%, 0 40%);
+}
+
+.cuboid.right .side:nth-of-type(2) {
+    clip-path: polygon(25% 33.33%, 25% 0, 100% 0, 100% 100%, 25% 100%, 25% 66.66%, 0 60%, 0 40%);
+}
+
+
+.cuboid.right .side:nth-of-type(3) {
+    width: calc(var(--depth) * 1vmin);
+    transform: translate(-50%, -50%) rotateY(-90deg) translate3d(0, 0, calc(var(--width) * 0.5vmin));
+    background: #9ab8c7;
+}
+
+.cuboid.right .side:nth-of-type(4) {
+    width: calc(var(--depth) * 1vmin);
+    transform: translate(-225%, -50%) rotateY(90deg) translate3d(0, 0, calc(var(--width) * 0.5vmin));
+    background: hsl(var(--hue), var(--sat), 75%);
+    height: 100%;
+}
+
+
+.cuboid.right .side:nth-of-type(5) {
+    width: 75%;
+    transform: translate(-33%, -50%) rotateX(90deg) translate3d(0, 0, calc(var(--height) * 0.5vmin));
+}
+
+.cuboid.right .side:nth-of-type(6) {
+    width: 75%;
+    transform: translate(-33%, -50%) rotateX(-90deg) translate3d(0, 0, calc(var(--height) * 0.5vmin));
+}
+
+
+.cuboid.right .side:nth-of-type(7) {
+    transform: translate(-50%, -150%) rotateY(90deg) translate3d(0px, 0, calc(var(--width) * -0.24925vmin));
+    background: #9ab8c7;
+}
+
+.cuboid.right .side:nth-of-type(8) {
+    transform: translate(-50%, 50%) rotateY(90deg) translate3d(0, 0, calc(var(--width) * -0.24925vmin));
+    background: #9ab8c7;
+}
+
+
+
+.cuboid.right .side:nth-of-type(9) {
+    --pos: -147%;
+}
+
+.cuboid.right .side:nth-of-type(10) {
+    --pos: -198%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.cuboid.room .side:nth-child(1),
+.cuboid.room .side:nth-child(2) {
+    display: none;
+}
+
+.cuboid.room {
+    --depth: 150;
+    --width: 90;
+    transform: translate3d(0vmin, 0vmin, 75vmin);
+    pointer-events: none;
+}
+
+.cuboid.room .side:nth-of-type(3),
+.cuboid.room .side:nth-of-type(4) {
+    --sz: 2px;
+    --ln: 2.5px;
+    --c1: #80a2b3;
+    --c2: #607D8B;
+    --c3: #ffffff;
+    --ts: 50%/ calc(var(--sz) * 11.8) calc(var(--sz) * 20);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    transform: translate(-50%, -50%) rotateY(-90deg) translate3d(0, 0, calc(var(--width) * -0.5vmin));
+    background:
+        linear-gradient(-90deg, #0008 70%, #fff0 90%),
+        /*shine*/
+        radial-gradient(circle at 60% 110%, var(--c3) calc(var(--sz) * -3), #fff0 calc(var(--sz) * 5)) var(--ts),
+        radial-gradient(circle at 60% 10%, var(--c3) calc(var(--sz) * -3), #fff0 calc(var(--sz) * 5)) var(--ts),
+        radial-gradient(circle at 110% 60%, var(--c3) calc(var(--sz) * -3), #fff0 calc(var(--sz) * 5)) var(--ts),
+        radial-gradient(circle at 10% 60%, var(--c3) calc(var(--sz) * -3), #fff0 calc(var(--sz) * 5)) var(--ts),
+        conic-gradient(from 120deg at 50% calc(82.75% + calc(var(--ln) / 1.5)), var(--c2) 0 120deg, #fff0 0 100%) var(--ts),
+        conic-gradient(from 120deg at 50% calc(82.75% + calc(var(--ln) / 1.5)), var(--c2) 0 120deg, #fff0 0 100%) var(--ts),
+        conic-gradient(from 120deg at 50% calc(82.5% - calc(var(--ln) * 1.5)), var(--c1) 0 120deg, #fff0 0 100%) var(--ts),
+        conic-gradient(from 120deg at 50% calc(82.5% - calc(var(--ln) * 1.5)), var(--c1) 0 120deg, #fff0 0 100%) var(--ts),
+        conic-gradient(from 60deg at calc(50% + var(--ln)) 50.5%, var(--c2) 0 120deg, #fff0 0 100%) var(--ts),
+        conic-gradient(from 60deg at calc(50% + var(--ln)) 50.5%, var(--c2) 0 120deg, #fff0 0 100%) var(--ts),
+        conic-gradient(from 180deg at calc(50% - var(--ln)) 50.5%, var(--c2) 0 120deg, #fff0 0 100%) var(--ts),
+        conic-gradient(from 180deg at calc(50% - var(--ln)) 50.5%, var(--c2) 0 120deg, #fff0 0 100%) var(--ts),
+        conic-gradient(from 0deg at calc(100% - var(--ln)) 37.75%, var(--c1) 0 90deg, #fff0 0 100%) var(--ts),
+        conic-gradient(from 0deg at calc(100% - var(--ln)) 37.75%, var(--c1) 0 90deg, #fff0 0 100%) var(--ts),
+        conic-gradient(from -90deg at var(--ln) 37.75%, var(--c1) 0 90deg, #fff0 0 100%) var(--ts),
+        conic-gradient(from -90deg at var(--ln) 37.75%, var(--c1) 0 90deg, #fff0 0 100%) var(--ts),
+        conic-gradient(from -60deg at 50% calc(50% - calc(var(--ln) * 1.5)), var(--c2) 0 120deg, #fff0 0 100%) var(--ts),
+        conic-gradient(from -60deg at 50% calc(50% - calc(var(--ln) * 1.5)), var(--c2) 0 120deg, #fff0 0 100%) var(--ts),
+        var(--c1);
+
+}
+
+.cuboid.room .side:nth-of-type(4) {
+    transform: translate(-50%, -50%) rotateY(-90deg) translate3d(0, 0, calc(var(--width) * 0.5vmin));
+}
+
+.cuboid.room .side:nth-of-type(5) {
+    --u: 2px;
+    --r1: calc(var(--u) * 4);
+    --r2: calc(var(--u) * 4.1);
+    --r3: calc(var(--u) / 12);
+    --r4: calc(var(--u) / 2.5);
+    --r5: calc(var(--u) / 2.25);
+    --r6: calc(var(--u) / 2);
+    --c0: #050505;
+    --c1: #1c1c1c;
+    --c2: #404040;
+    --c3: #525252;
+    --c4: #808080;
+    --gp: 50%/calc(var(--u) * 10) calc(var(--u) * 16.8);
+    --border-fix: var(--c0) 0 25%, #fff0 0 100%;
+    --screw1: var(--c4) var(--r3), #fff0 var(--r4);
+    --screw2: var(--c0), var(--c1) var(--r5), #fff0 var(--r6);
+    --hole1: var(--c0) var(--r1), #fff0 var(--r2) 100%;
+    --hole2: var(--c1) var(--r1), #fff0 var(--r2) 100%;
+    --hole3: var(--c4) var(--r1), #fff0 var(--r2) 100%;
+    background:
+        linear-gradient(0deg, #000d 75%, #fff0 100%),
+        conic-gradient(from 225deg at 40% 50%, var(--border-fix)) var(--gp),
+        conic-gradient(from 45deg at 60% 50%, var(--border-fix)) var(--gp),
+        conic-gradient(from -45deg at 50% 24%, var(--border-fix)) var(--gp),
+        conic-gradient(from 135deg at 50% 76%, var(--border-fix)) var(--gp),
+        radial-gradient(circle at 99.5% 83.5%, var(--screw1)) var(--gp),
+        radial-gradient(circle at 100% 84%, var(--screw2)) var(--gp),
+        radial-gradient(circle at -0.5% 83.5%, var(--screw1)) var(--gp),
+        radial-gradient(circle at 0% 84%, var(--screw2)) var(--gp),
+        radial-gradient(circle at 99.5% 16.5%, var(--screw1)) var(--gp),
+        radial-gradient(circle at 100% 17%, var(--screw2)) var(--gp),
+        radial-gradient(circle at -0.5% 16.5%, var(--screw1)) var(--gp),
+        radial-gradient(circle at 0% 17%, var(--screw2)) var(--gp),
+        radial-gradient(circle at 49.5% 67.5%, var(--screw1)) var(--gp),
+        radial-gradient(circle at 50% 68%, var(--screw2)) var(--gp),
+        radial-gradient(circle at 49.5% 31.5%, var(--screw1)) var(--gp),
+        radial-gradient(circle at 50% 32%, var(--screw2)) var(--gp),
+        radial-gradient(circle at 100% 50%, var(--hole1)) var(--gp),
+        radial-gradient(circle at 98% 48%, var(--hole2)) var(--gp),
+        radial-gradient(circle at 102% 52%, var(--hole3)) var(--gp),
+        radial-gradient(circle at 0% 50%, var(--hole1)) var(--gp),
+        radial-gradient(circle at -2% 48%, var(--hole2)) var(--gp),
+        radial-gradient(circle at 2% 52%, var(--hole3)) var(--gp),
+        radial-gradient(circle at 50% 100%, var(--hole1)) var(--gp),
+        radial-gradient(circle at 48% 98%, var(--hole2)) var(--gp),
+        radial-gradient(circle at 52% 102%, var(--hole3)) var(--gp),
+        radial-gradient(circle at 50% 0%, var(--hole1)) var(--gp),
+        radial-gradient(circle at 48% -2%, var(--hole2)) var(--gp),
+        radial-gradient(circle at 52% 2%, var(--hole3)) var(--gp),
+        linear-gradient(45deg, var(--c2) 33%, #ffffff20 55% 65%, var(--c3) 70%);
+    background-color: var(--c2);
+}
+
+
+.cuboid.room .side:nth-of-type(6) {
+    --u: 3.5px;
+    --c1: #83b0e3;
+    --c2: #4e6a89;
+    --c3: #273647;
+    --gp: 50%/calc(var(--u) * 5) calc(var(--u) * 10);
+    --bp: calc(var(--u) * -2.5) calc(var(--u) * -5);
+    --bg: radial-gradient(circle at 50% 25%, var(--c2) 15%, #fff0 30% 100%) var(--gp), conic-gradient(from 270deg at 34% 46%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp), conic-gradient(from 45deg at 66% 46%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp), conic-gradient(from 180deg at 50% 80%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp), conic-gradient(from 135deg at 50% 80%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp), conic-gradient(from 0deg at 0% 20%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp), conic-gradient(from -45deg at 100% 20%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp), linear-gradient(180deg, var(--c2) 0 4.5%, #fff0 0 45.25%, var(--c2) 0 50%, #fff0 0% 100%) var(--gp), radial-gradient(circle at 50% 25%, #fff0 0 25%, var(--c2) 26% 32%, #fff0 0 100%) var(--gp), linear-gradient(165deg, var(--c3) 15%, var(--c1) 44%, #fff0 0 100%) var(--gp), linear-gradient(180deg, var(--c1) 50%, #fff0 0 100%) var(--gp);
+    background: linear-gradient(180deg, #000d 75%, #fff0 100%), linear-gradient(90deg, var(--door-blue) 0 2.25vmin, #fff0 0 87.85vmin, var(--door-blue) 0 100%), var(--bg), var(--bg);
+    background-position: 0 0, 0 0, var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+}
+
+
+
+
+
+
+
+
+
+/*** CYLINDER ***/
+
+.cylinder {
+    --bg-side: repeating-linear-gradient(5deg, #725f5880 0.01vmin, #8b888780 0.0125vmin, #bfbfbf80 0.015vmin);
+    --bg-side: repeating-linear-gradient(45deg, #725f5880 0.001vmin, #8b888780 0.002vmin, #bfbfbf80 0.015vmin), repeating-linear-gradient(-45deg, #725f5880 0.001vmin, #8b888780 0.002vmin, #bfbfbf80 0.015vmin);
+    --bg-side: repeating-linear-gradient(45deg, #725f5880 0 0.0001vmin, #8b888780 0 0.0002vmin), repeating-linear-gradient(-45deg, #725f58 0 0.0001vmin, #8b8887 0 0.0002vmin);
+    --bg-side: repeating-linear-gradient(45deg, #fff0 0.0001vmin, #fff0 0 0.0002vmin), repeating-linear-gradient(-45deg, #fff0 0 0.0001vmin, #fff0 0 0.0002vmin);
+    --height: 10;
+    --width: 10;
+    --depth: 90;
+    --hue: 200;
+    --sat: 25%;
+    height: calc(var(--height) * 1vmin);
+    width: calc(var(--width) * 1vmin);
+    position: absolute;
+}
+
+.cylinder>div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 100%;
+    width: 100%;
+}
+
+.cylinder>div:nth-of-type(1) {
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+    transform: translate3d(-50%, -50%, calc(var(--depth) * 0.5vmin));
+    background: var(--bg-side), hsl(var(--hue), var(--sat), 40%);
+}
+
+.cylinder>div:nth-of-type(2) {
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+    transform: translate3d(-50%, -50%, calc(var(--depth) * -0.5vmin)) rotateY(180deg);
+    background: var(--bg-side), hsl(var(--hue), var(--sat), 45%);
+}
+
+.cylinder>div:nth-of-type(3) {
+    width: calc(var(--depth) * 1vmin);
+    height: calc(calc(calc(var(--width) * 41.17) / 100) * 1vmin);
+    transform: translate(-50%, -50%) rotateY(90deg) translate3d(0, 0, calc(var(--width) * 0.5vmin));
+    background: var(--bg-side), hsl(var(--hue), var(--sat), 50%);
+    /*45*/
+}
+
+.cylinder>div:nth-of-type(4) {
+    width: calc(var(--depth) * 1vmin);
+    height: calc(calc(calc(var(--width) * 41.17) / 100) * 1vmin);
+    transform: translate(-50%, -50%) rotateY(-90deg) translate3d(0, 0, calc(var(--width) * 0.5vmin));
+    background: var(--bg-side), hsl(var(--hue), var(--sat), 55%);
+    /*50*/
+}
+
+.cylinder>div:nth-of-type(5) {
+    height: calc(var(--depth) * 1vmin);
+    width: calc(calc(calc(var(--width) * 41.17) / 100) * 1vmin);
+    transform: translate(-50%, -50%) rotateX(90deg) translate3d(0, 0, calc(var(--height) * 0.5vmin));
+    background: var(--bg-side), hsl(var(--hue), var(--sat), 60%);
+}
+
+.cylinder>div:nth-of-type(6) {
+    height: calc(var(--depth) * 1vmin);
+    width: calc(calc(calc(var(--width) * 41.17) / 100) * 1vmin);
+    transform: translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc(var(--height) * 0.5vmin));
+    background: var(--bg-side), hsl(var(--hue), var(--sat), 65%);
+}
+
+.cylinder>div:nth-of-type(7) {
+    height: calc(var(--depth) * 1vmin);
+    width: calc(calc(calc(var(--width) * 41.17) / 100) * 1vmin);
+    transform: translate(-50%, -50%) rotateX(-90deg) rotateY(45deg) translate3d(0, 0, calc(var(--height) * 0.5vmin));
+    background: var(--bg-side), hsl(var(--hue), var(--sat), 70%);
+}
+
+.cylinder>div:nth-of-type(8) {
+    height: calc(var(--depth) * 1vmin);
+    width: calc(calc(calc(var(--width) * 41.17) / 100) * 1vmin);
+    transform: translate(-50%, -50%) rotateX(-90deg) rotateY(-45deg) translate3d(0, 0, calc(var(--height) * 0.5vmin));
+    background: var(--bg-side), hsl(var(--hue), var(--sat), 75%);
+}
+
+.cylinder>div:nth-of-type(9) {
+    height: calc(var(--depth) * 1vmin);
+    width: calc(calc(calc(var(--width) * 41.17) / 100) * 1vmin);
+    transform: translate(-50%, -50%) rotateX(-90deg) rotateY(135deg) translate3d(0, 0, calc(var(--height) * 0.5vmin));
+    background: var(--bg-side), hsl(var(--hue), var(--sat), 80%);
+}
+
+.cylinder>div:nth-of-type(10) {
+    height: calc(var(--depth) * 1vmin);
+    width: calc(calc(calc(var(--width) * 41.17) / 100) * 1vmin);
+    transform: translate(-50%, -50%) rotateX(-90deg) rotateY(-135deg) translate3d(0, 0, calc(var(--height) * 0.5vmin));
+    background: var(--bg-side), hsl(var(--hue), var(--sat), 85%);
+}
+
+
+
+
+
+
+.cylinder:nth-child(1) {
+    transform: rotateY(90deg) translate3d(5vmin, 67vmin, 35vmin);
+}
+
+.cylinder:nth-child(2) {
+    transform: rotateY(90deg) translate3d(5vmin, -7vmin, 35vmin);
+}
+
+
+
+
+
+
+.cylinder:nth-child(n+3) {
+    --width: 6;
+    --height: 6;
+}
+
+.cylinder:nth-child(3) {
+    transform: rotateX(2deg) rotateZ(-90deg) rotateY(90deg) translate3d(1vmin, 83vmin, -27vmin);
+}
+
+.cylinder:nth-child(4) {
+    transform: rotateY(90deg) translate3d(1vmin, 68vmin, 38vmin);
+}
+
+.cylinder:nth-child(5) {
+    transform: rotateY(-90deg) translate3d(-1.1vmin, -4vmin, -37vmin) rotate(269deg);
+}
+
+.cylinder:nth-child(6) {
+    transform: rotateX(2deg) rotateZ(-90deg) rotateY(90deg) translate3d(1vmin, -9.1vmin, -27vmin) rotate(270deg);
+}
+
+
+
+.cylinder:nth-child(n+7) {
+    --depth: 70;
+}
+
+.cylinder:nth-child(7) {
+    transform: rotateZ(90deg) translate3d(68vmin, 9.1vmin, 25vmin) rotate(92deg);
+}
+
+.cylinder:nth-child(8) {
+    transform: rotateZ(90deg) rotateY(0deg) translate3d(68vmin, -83vmin, 25vmin);
+}
+
+.cylinder:nth-child(9) {
+    transform: rotateZ(90deg) rotateY(180deg) translate3d(4vmin, 9vmin, -35vmin) rotate(271deg);
+}
+
+.cylinder:nth-child(10) {
+    transform: rotateZ(-90deg) rotateY(180deg) translate3d(-4vmin, 83vmin, -35vmin);
+}
+
+
+
+
+
+
+.cylinder:nth-child(11) {
+    transform: rotateZ(90deg) rotateY(0deg) translate3d(32vmin, 10vmin, 35vmin);
+}
+
+.cylinder:nth-child(12) {
+    transform: rotateZ(90deg) rotateY(0deg) translate3d(32vmin, -84.2vmin, 35vmin) rotate(180deg);
+}
+
+
+
+
+
+.cylinder:nth-child(13) {
+    transform: rotateZ(90deg) rotateY(180deg) translate3d(4.95vmin, -54vmin, -35vmin) rotate(-90deg);
+}
+
+.cylinder:nth-child(14) {
+    transform: rotateZ(90deg) rotateY(180deg) translate3d(4.95vmin, -20vmin, -35vmin) rotate(-90deg);
+}
+
+.cylinder:nth-child(15) {
+    transform: rotateX(-2deg) rotateZ(-90deg) rotateY(90deg) translate3d(-1vmin, 83vmin, -27vmin);
+}
+
+.cylinder:nth-child(16) {
+    transform: rotateX(-2deg) rotateZ(-90deg) rotateY(90deg) translate3d(-0.5vmin, -9.1vmin, -27vmin) rotate(270deg);
+}
+
+
+
+
+
+
+
+
+
+
+
+/* rayas barras */
+
+.cylinder:nth-child(3)>div:nth-of-type(5),
+.cylinder:nth-child(15)>div:nth-of-type(5) {
+    background: #a6c1cd;
+}
+
+.cylinder:nth-child(3)>div:nth-of-type(10) {
+    background:
+        linear-gradient(-325deg, #fff0 1.75vmin, #80a2b3 calc(1.75vmin + 1px) 100%),
+        linear-gradient(-35deg, #fff0 1.75vmin, #80a2b3 calc(1.75vmin + 1px) 100%),
+        linear-gradient(145deg, #fff0 1.5vmin, #80a2b3 calc(1.5vmin + 1px) 100%),
+        linear-gradient(45deg, #fff0 0.8vmin, #80a2b3 0 100%),
+        linear-gradient(135deg, #fff0 0.8vmin, #80a2b3 0 100%),
+        hsl(var(--hue), var(--sat), 85%);
+    background-repeat: no-repeat;
+    background-size: 100% 2vmin, 100% 2vmin, 100% 2vmin, 1vmin 1vmin, 1vmin 1vmin, 100% 100%;
+    background-position: 50% 18%, 50% 18%, 50% 94%, 100% 57.7%, 100% 53.75%, 0 0;
+}
+
+.cylinder:nth-child(4)>div:nth-of-type(10) {
+    background:
+        linear-gradient(0deg, var(--door-blue) 0 1vmin, #fff0 0 86.75vmin, var(--door-blue) 86.75vmin 100%),
+        hsl(var(--hue), var(--sat), 85%);
+}
+
+.cylinder:nth-child(5)>div:nth-of-type(8) {
+    background:
+        linear-gradient(-35deg, #80a2b3 1.8vmin, #fff0 calc(1.8vmin + 1px) 100%),
+        linear-gradient(-35deg, #80a2b3 1.65vmin, #fff0 calc(1.65vmin + 1px) 100%),
+        linear-gradient(-145deg, #80a2b3 1.85vmin, #fff0 calc(1.85vmin + 1px) 100%),
+        linear-gradient(-215deg, #80a2b3 1.65vmin, #fff0 calc(1.65vmin + 1px) 100%),
+        hsl(var(--hue), var(--sat), 75%);
+}
+
+.cylinder:nth-child(6)>div:nth-of-type(10) {
+    background:
+        linear-gradient(-325deg, #fff0 1.75vmin, #80a2b3 calc(1.75vmin + 1px) 100%),
+        linear-gradient(-35deg, #fff0 1.65vmin, #80a2b3 calc(1.65vmin + 1px) 100%),
+        linear-gradient(-145deg, #fff0 1.5vmin, #80a2b3 calc(1.5vmin + 1px) 100%),
+        linear-gradient(-35deg, #fff0 0.8vmin, #80a2b3 0 100%),
+        linear-gradient(-142deg, #fff0 0.8vmin, #80a2b3 0 100%),
+        hsl(var(--hue), var(--sat), 85%);
+    background-repeat: no-repeat;
+    background-size: 100% 2vmin, 100% 2vmin, 100% 2vmin, 1.2vmin 1.2vmin, 1.2vmin 1.2vmin, 100% 100%;
+    background-position: 50% 18%, 50% 18%, 50% 94%, 0% 57.8%, 0% 53.75%, 0 0;
+}
+
+.cylinder:nth-child(7)>div:nth-of-type(8) {
+    background:
+        linear-gradient(146deg, #fff0 47.5vmin, #80a2b3 calc(47.5vmin + 1px) 100%),
+        hsl(var(--hue), var(--sat), 75%);
+}
+
+.cylinder:nth-child(8)>div:nth-of-type(8) {
+    background: linear-gradient(214deg, #fff0 47.5vmin, #80a2b3 calc(47.5vmin + 1px) 100%), hsl(var(--hue), var(--sat), 75%);
+}
+
+
+.cylinder:nth-child(9)>div:nth-of-type(9),
+.cylinder:nth-child(10)>div:nth-of-type(9) {
+    background:
+        linear-gradient(-214deg, #80a2b3 1.7vmin, #fff0 calc(1.7vmin + 1px) 100%),
+        linear-gradient(214deg, #80a2b3 1.7vmin, #fff0 calc(1.7vmin + 1px) 100%),
+        hsl(var(--hue), var(--sat), 80%);
+}
+
+.cylinder:nth-child(11)>div:nth-of-type(9) {
+    background:
+        linear-gradient(90deg, #7096a9 0 1.2vmin, #fff0 0 100%),
+        linear-gradient(30deg, #7096a0 3.75vmin, #fff0 calc(3.75vmin + 2px)),
+        var(--bg-side),
+        hsl(var(--hue), var(--sat), 80%);
+}
+
+.cylinder:nth-child(11)>div:nth-of-type(10) {
+    background:
+        linear-gradient(-90deg, #7096a9 0 1.2vmin, #fff0 0 100%),
+        linear-gradient(-30deg, #7096a9 3.75vmin, #fff0 calc(3.75vmin + 2px)),
+        var(--bg-side), hsl(var(--hue),
+            var(--sat), 85%);
+}
+
+.cylinder:nth-child(12)>div:nth-of-type(9) {
+    background:
+        linear-gradient(90deg, #7096a9 0 1.5vmin, #fff0 0 100%),
+        linear-gradient(30deg, #7096a9 4.125vmin, #fff0 calc(4.125vmin + 2px)),
+        var(--bg-side),
+        hsl(var(--hue), var(--sat), 80%);
+}
+
+.cylinder:nth-child(12)>div:nth-of-type(10) {
+    background:
+        /*solo cambia el -90deg y -30deg */
+        linear-gradient(-90deg, #7096a9 0 1.5vmin, #fff0 0 100%),
+        linear-gradient(-30deg, #7096a9 4.125vmin, #fff0 calc(4.125vmin + 2px)),
+        var(--bg-side),
+        hsl(var(--hue), var(--sat), 85%);
+}
+
+
+.cylinder:nth-child(13)>div:nth-of-type(9) {
+    background:
+        /*solo cambia el -90deg y 210deg */
+        linear-gradient(90deg, #7096a9 0 1.1vmin, #fff0 0 100%),
+        linear-gradient(155deg, #7096a9 4vmin, #fff0 calc(4vmin + 2px)),
+        var(--bg-side),
+        hsl(var(--hue), var(--sat), 80%);
+}
+
+.cylinder:nth-child(13)>div:nth-of-type(10) {
+    background:
+        /*solo cambia el -90deg y 210deg */
+        linear-gradient(-90deg, #7096a9 0 1.1vmin, #fff0 0 100%),
+        linear-gradient(210deg, #7096a9 3.1vmin, #fff0 calc(3.1vmin + 2px)),
+        var(--bg-side),
+        hsl(var(--hue), var(--sat), 85%)
+}
+
+
+
+.cylinder:nth-child(14)>div:nth-of-type(9) {
+    background:
+        /*solo cambia el -90deg y 210deg */
+        linear-gradient(90deg, #7096a9 0 1.1vmin, #fff0 0 100%),
+        linear-gradient(155deg, #7096a9 2.75vmin, #fff0 calc(2.75vmin + 2px)),
+        var(--bg-side),
+        hsl(var(--hue), var(--sat), 80%);
+}
+
+.cylinder:nth-child(14)>div:nth-of-type(10) {
+    background:
+        /*solo cambia el -90deg y 210deg */
+        linear-gradient(-90deg, #7096a9 0 1.1vmin, #fff0 0 100%),
+        linear-gradient(210deg, #7096a9 3.1vmin, #fff0 calc(3.1vmin + 2px)),
+        var(--bg-side),
+        hsl(var(--hue), var(--sat), 85%)
+}
+
+
+
+
+
+
+
+
+
+.cylinder.ground>div:nth-child(10),
+.cylinder.ceiling>div:nth-child(8) {
+    background: repeating-linear-gradient(45deg, #000 0 1vmin, #fc0 calc(1vmin + 1px) 2vmin, #000 calc(2vmin + 1px)), var(--bg-side), hsl(var(--hue), var(--sat), 50%);
+    background-size: 50% 100%, 100% 100%, 100% 100%;
+    background-position: 0% 0%, 0 0, 0 0;
+    background-repeat: no-repeat;
+}
+
+.cylinder.ceiling>div:nth-child(8) {
+    background-position: 100% 0%, 0 0, 0 0;
+}
+
+
+
+
+
+/*** grid step ***/
+.cylinder.ground>div:nth-of-type(5),
+.cylinder.ceiling>div:nth-of-type(6),
+.cylinder:nth-child(4)>div:nth-of-type(5),
+.cylinder:nth-child(5)>div:nth-of-type(4) {
+    background: repeating-linear-gradient(45deg, #0008 0 1px, #fff0 6px), repeating-linear-gradient(-45deg, #0008 0 1px, #fff0 6px) #fff;
+
+    background-size: calc(100% - 0.2vmin) 100%;
+    background-repeat: no-repeat;
+    background-position: 100% 0;
+
+}
+
+.cylinder:nth-child(5)>div:nth-of-type(4) {
+    background-position: 0% 0%;
+    background-size: 100% calc(100% - 0.2vmin);
+    background-repeat: no-repeat;
+}
+
+
+
+
+
+
+
+
+
+.door .cuboid .side:nth-of-type(8) {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 70% 86%, 30% 86%, 0 100%);
+}
+
+.door .cuboid .side:nth-of-type(7) {
+    clip-path: polygon(30% 14%, 70% 14%, 100% 0, 100% 100%, 0 100%, 0 0);
+}
+
+
+
+
+
+
+
+.cylinders {
+    width: 80vmin;
+    height: 70vmin;
+    /*background: #fc03;*/
+    position: absolute;
+    pointer-events: none;
+}
+
+
+
+
+
+
+
+/*** door lights ***/
+.cuboid.left .cylinder:nth-child(11) {
+    transform: rotateZ(90deg) rotateY(90deg) translate3d(-3vmin, -58vmin, 10vmin) rotate(-90deg);
+    --depth: 8;
+}
+
+.cuboid.left .cylinder:nth-child(12) {
+    transform: rotateZ(270deg) rotateY(90deg) translate3d(-3vmin, 58vmin, -54vmin) rotate(-90deg);
+    --depth: 8;
+}
+
+
+.cuboid.right .cylinder:nth-child(11) {
+    transform: rotateZ(90deg) rotateY(90deg) translate3d(-3vmin, -5.5vmin, 32vmin) rotate(-90deg);
+    --depth: 8;
+}
+
+.cuboid.right .cylinder:nth-child(11)>div:nth-of-type(5):before {
+    height: 80%;
+    top: 10%;
+    height: 60%;
+    top: 20%;
+    --lit: #ff4040;
+    box-shadow: 0 0 3.5vmin 0.05vmin var(--lit), 0 0 15vmin 2vmin #ffffff, 0 0 0.5vmin 0.25vmin #0008 inset;
+    background: var(--lit);
+    animation: luces-close 2s ease 0s 1;
+}
+
+.content.active .door .cuboid.right .cylinder:nth-child(11)>div:nth-of-type(5):before {
+    --lit: #12dd2d;
+    animation: luces-open 2s ease 0s 1;
+    /*animation-fill-mode: forwards;*/
+}
+
+@keyframes luces-open {
+
+    0%,
+    20%,
+    40%,
+    60%,
+    80%,
+    100% {
+        --lit: #f7cc0e;
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        --lit: #f78a0e;
+    }
+}
+
+@keyframes luces-close {
+
+    0%,
+    20%,
+    40%,
+    60%,
+    80%,
+    100% {
+        --lit: #f78a0e;
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        --lit: #f7cc0e;
+    }
+}
+
+.cuboid.right .cylinder:nth-child(11)>div:nth-of-type(9) {
+    background: linear-gradient(35deg, #fff0 0 2.5vmin, #7096a9 calc(2.5vmin + 1px) 4.5vmin, #fff0 0 100%), linear-gradient(-35deg, #fff0 0 3vmin, #7096a9 calc(3vmin + 1px) 5vmin, #fff0 calc(5vmin + 1px) 100%), hsl(var(--hue), var(--sat), 85%);
+}
+
+.cuboid.right .cylinder:nth-child(11)>div:nth-of-type(10) {
+    background: linear-gradient(-35deg, #fff0 0 2.5vmin, #7096a9 calc(2.5vmin + 1px) 4.5vmin, #fff0 0 100%), linear-gradient(35deg, #fff0 0 3vmin, #7096a9 calc(3vmin + 1px) 5vmin, #fff0 calc(5vmin + 1px) 100%), hsl(var(--hue), var(--sat), 85%);
+}
+
+
+
+
+
+
+
+/** luces left **/
+.cuboid.left .cylinder:nth-child(11)>div:nth-of-type(5):before,
+.cuboid.left .cylinder:nth-child(12)>div:nth-of-type(5):before {
+    top: 10%;
+    height: 80%;
+}
+
+
+
+/*** faces colors ***/
+
+/*
+.cylinder:nth-child(3) > div:nth-child(10) {
+    background: var(--bg-side), hsl(var(--hue), var(--sat), 100%);
+}
+.cylinder:nth-child(4) > div:nth-child(10) {
+    background: var(--bg-side), hsl(var(--hue), var(--sat), 30%);
+}
+.cylinder:nth-child(5) > div:nth-child(8) {
+    background: var(--bg-side), hsl(var(--hue), var(--sat), 60%);
+}
+.cylinder:nth-child(6) > div:nth-child(8) {
+    background: var(--bg-side), hsl(var(--hue), var(--sat), 10%);
+}
+*/
+
+
+
+
+
+
+
+/*** screws ***/
+.door .cuboid.right .side:nth-of-type(1):before,
+.door .cuboid.left .side:nth-of-type(1):before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    --screw1: #fff 0.1vmin, var(--door-blue) 0.25vmin, #fff0 calc(0.25vmin + 2px) 100%;
+    --screw2: #373737 0.25vmin, #fff0 calc(0.25vmin + 2px) 100%;
+    --screw: radial-gradient(circle at 50% 50%, var(--screw1)), radial-gradient(circle at 52% 52%, var(--screw2));
+    --bg-screws: var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw);
+    background: var(--bg-screws);
+    background-repeat: no-repeat;
+    background-size: 1vmin 1vmin;
+    background-position: 0.25% 50%, 0.25% 50%, 0.25% 41%, 0.25% 41%, 0.25% 59%, 0.25% 59%, 7.5% 38.75%, 7.5% 38.75%, 7.5% 61.25%, 7.5% 61.25%, 16.5% 36.35%, 16.5% 36.35%, 16.5% 63.7%, 16.5% 63.7%, 25.75% 33.85%, 25.75% 33.85%, 25.75% 66.15%, 25.75% 66.15%, 25.75% 23.85%, 25.75% 23.85%, 25.75% 76.15%, 25.75% 76.15%, 25.75% 13.85%, 25.75% 13.85%, 25.75% 86.15%, 25.75% 86.15%, 25.75% 3.3%, 25.75% 3.3%, 25.75% 96.55%, 25.75% 96.55%, 37% 3.25%, 37% 3.25%, 37% 96.8%, 37% 96.8%, 49% 3.25%, 49% 3.25%, 49% 96.8%, 49% 96.8%, 61% 3.25%, 61% 3.25%, 61% 96.8%, 61% 96.8%, 71.65% 3.25%, 71.65% 3.25%, 71.65% 96.8%, 71.65% 96.8%, 71.65% 13.85%, 71.65% 13.85%, 71.65% 86.15%, 71.65% 86.15%, 71.65% 23.85%, 71.65% 23.85%, 71.65% 76.15%, 71.65% 76.15%, 71.65% 33.85%, 71.65% 33.85%, 71.65% 66.15%, 71.65% 66.15%, 71.65% 44.85%, 71.65% 44.85%, 71.65% 55.15%, 71.65% 55.15%;
+}
+
+
+
+.door .cuboid.left .side:nth-of-type(1):before {
+    --screw1: var(--door-blue) 0.2vmin, #fff 0.25vmin, #fff0 calc(0.25vmin + 2px) 100%;
+    --bg-screws: var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw), var(--screw);
+    background-position: 74.35% 50%, 74.35% 50%, 74.5% 39%, 74.5% 39%, 74.5% 61%, 74.5% 61%, 83.1% 36.35%, 83.1% 36.35%, 83.1% 63.3%, 83.1% 63.3%, 92% 34.1%, 92% 34.1%, 92% 65.8%, 92% 65.8%, 99.5% 32.1%, 99.5% 32.1%, 99.5% 68.15%, 99.5% 68.15%, 99.5% 23.85%, 99.5% 23.85%, 99.5% 76.15%, 99.5% 76.15%, 99.5% 13.85%, 99.5% 13.85%, 99.5% 86.15%, 99.5% 86.15%, 99.5% 3.3%, 99.5% 3.3%, 99.5% 96.55%, 99.5% 96.55%, 89% 3.25%, 89% 3.25%, 89% 96.8%, 89% 96.8%, 78.5% 3.25%, 78.5% 3.25%, 78.5% 96.8%, 78.5% 96.8%, 68% 3.25%, 68% 3.25%, 68% 96.8%, 68% 96.8%, 57.5% 3.25%, 57.5% 3.25%, 57.5% 96.8%, 57.5% 96.8%, 46.8% 3.25%, 46.8% 3.25%, 46.8% 96.8%, 46.8% 96.8%, 35.9% 3.25%, 35.9% 3.25%, 35.9% 96.8%, 35.9% 96.8%, 25% 3.25%, 25% 3.25%, 25% 96.8%, 25% 96.8%, 24.65% 13.85%, 24.65% 13.85%, 24.65% 86.15%, 24.65% 86.15%, 24.65% 23.85%, 24.65% 23.85%, 24.65% 76.15%, 24.65% 76.15%, 24.65% 33.85%, 24.65% 33.85%, 24.65% 66.15%, 24.65% 66.15%, 24.65% 44.85%, 24.65% 44.85%, 24.65% 55.15%, 24.65% 55.15%;
+    content: "1";
+    font-size: 26vmin;
+    text-align: center;
+    font-family: 'Black Ops One', cursive;
+    line-height: 72.5vmin;
+    color: var(--door-blue);
+    text-shadow: 0.15vmin 0.15vmin 0 #ffffff, -0.15vmin -0.15vmin 0 #64808e;
+}
+
+
+
+
+
+
+
+
+
+
+/* door holes */
+.door .cuboid.right .side:nth-of-type(1):after,
+.door .cuboid.left .side:nth-of-type(1):after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 23%;
+    left: 37%;
+    height: 72%;
+    top: 14%;
+    background: repeating-linear-gradient(-45deg, #ffeb3b4d 0 6vmin, #00000040 0 12vmin) #eef1f1;
+    box-shadow: -0.1vmin -0.1vmin 0.1vmin 0vmin #f7f7f7, 0.1vmin 0.1vmin 0.1vmin 0vmin #0004;
+    overflow: visible;
+    border-radius: 0.35vmin;
+    border: 1.5vmin solid #fff8;
+    box-sizing: border-box;
+    border-color: #607d8b #ebebeb white #a6c1cd;
+    background: var(--door-blue);
+}
+
+.door .cuboid.right .side:nth-of-type(1):after {
+    /*width: 40%;*/
+    /*left: 23%*/
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6vmin;
+    letter-spacing: -2vmin;
+    font-family: 'Black Ops One', cursive;
+    content: "DANGER";
+    text-indent: -1vmin;
+    color: #69828f;
+    content: "BETA";
+    content: "UFCA";
+    content: "UFCA\2022 JUÁ";
+    text-shadow: 0.1vmin 0.1vmin 0 #a6c1cd, -0.1vmin -0.1vmin 0 #4c636f;
+}
+
+.door .cuboid.left .side:nth-of-type(1):after {
+    background: #fff0;
+    font-family: 'Black Ops One', cursive;
+    font-size: 6vmin;
+    text-align: center;
+    color: var(--door-blue);
+    text-shadow: 0.15vmin 0.15vmin 0 #ffffff, -0.15vmin -0.15vmin 0 #56707d;
+    /* content: "CARD"; */
+    width: 33%;
+    height: 41%;
+    left: 23vmin;
+    top: 29.5%;
+    border-top-color: #fff0;
+    border-bottom-color: #fff0;
+    box-shadow: 0.1vmin 0vmin 0.01vmin 0vmin #0004;
+    border-bottom-width: 0.4vmin;
+    border-top-width: 0.4vmin;
+    /* transform: skewY(-14deg); */
+}
+
+
+
+.door .cuboid.left .side:nth-of-type(1) span,
+.door .cuboid.right .side:nth-of-type(1) span {
+    position: absolute;
+    width: 9%;
+    height: 14%;
+    border-radius: 0.35vmin;
+    border: 1.5vmin solid #fff8;
+    box-sizing: border-box;
+    border-color: #607d8b #ebebeb white #a6c1cd;
+    left: 82.6%;
+    top: 11.5%;
+    z-index: 1;
+}
+
+.door .cuboid.left .side:nth-of-type(1) span:before,
+.door .cuboid.right .side:nth-of-type(1) span:before,
+.door .cuboid.right .side:nth-of-type(1) span:after {
+    content: "";
+    position: absolute;
+    width: calc(100% + 2.5vmin);
+    height: calc(100% + 2.5vmin);
+    border-radius: 0.35vmin;
+    border: 1.5vmin solid #fff8;
+    box-sizing: border-box;
+    border-color: #607d8b #ebebeb white #a6c1cd;
+    left: -1.25vmin;
+    top: 43vmin;
+    background: linear-gradient(180deg, #fff0 0.125vmin, var(--door-blue) 0 100%);
+    background: var(--door-blue);
+}
+
+.door .cuboid.right .side:nth-of-type(1) span {
+    left: 5.25vmin;
+    top: 30vmin;
+}
+
+
+
+.door .cuboid.right .side:nth-of-type(1) span:before,
+.door .cuboid.right .side:nth-of-type(1) span:after {
+    top: 0.5vmin;
+    left: 11vmin;
+    width: 9.75vmin;
+    height: calc(100% + 3vmin);
+    border-right-color: #fff0;
+    background: var(--door-blue);
+    transform: skewY(16deg);
+}
+
+.door .cuboid.right .side:nth-of-type(1) span:after {
+    content: "";
+    position: absolute;
+    top: -3.25vmin;
+    transform: skewY(-16deg);
+    border-bottom-width: 0;
+}
+
+
+
+
+
+
+
+
+/* skew holes */
+
+.door .cuboid.left .side:nth-of-type(1) span+span {
+    left: 23vmin;
+    height: 11vmin;
+    top: 11.85vmin;
+    width: 30vmin;
+    transform: skewY(-14deg);
+    border-bottom-color: #fff0;
+    background: var(--door-white);
+    z-index: -1;
+    font-family: 'Black Ops One', cursive;
+    font-size: 6vmin;
+    text-align: center;
+    line-height: 9vmin;
+    color: var(--door-blue);
+    text-shadow: 0.15vmin 0.15vmin 0 #ffffff, -0.15vmin -0.15vmin 0 #56707d;
+}
+
+.door .cuboid.left .side:nth-of-type(1) .title::before {
+    font-size: 8.5vmin !important;
+}
+
+.door .cuboid.left .side:nth-of-type(1) span+span:before {
+    transform: skewY(28deg);
+    top: 33.5vmin;
+    background: var(--door-white);
+    border-top-color: #fff0;
+    left: -1.35vmin;
+    content: "BETA";
+    content: "CARD";
+}
+
+
+
+
+
+.door .cuboid.left .side:nth-of-type(1) span+span:after,
+.door .cuboid.left .side:nth-of-type(1) span+span i {
+    background: #fff0;
+    top: 8.15vmin;
+    background: var(--door-white);
+    border-top-color: #fff0;
+    left: 20vmin;
+    content: "";
+    border: 1.5vmin solid #fff0;
+    border-bottom-color: white;
+    border-left-width: 1.95vmin;
+    border-top: 0;
+    border-right-color: #ececec;
+    width: 5.25vmin;
+    position: absolute;
+    border-radius: 0 0 0.25vmin 1vmin;
+
+}
+
+.door .cuboid.left .side:nth-of-type(1) span+span i {
+    top: 39.05vmin;
+    width: 9vmin;
+    left: 19.35vmin;
+    transform: rotate(28deg);
+    border-top: 1.5vmin solid #617e8c;
+    border-bottom: 0;
+    border-right-width: 0.75vmin;
+    border-radius: 0.5vmin 0 0 0;
+}
+
+
+
+.room .side {
+    /*opacity: 0.2;*/
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.cam {
+    float: left;
+    width: 33.33%;
+    height: 33.33%;
+    z-index: 333;
+    position: relative;
+    /*box-shadow: 0 0 0 1px red inset;*/
+}
+
+/*
+.cam:nth-child(1):hover~.content {
+    transform: rotateX(10deg) rotateY(-10deg) translateZ(0vmin);
+}
+
+.cam:nth-child(2):hover~.content {
+    transform: rotateX(10deg) rotateY(0deg) translateZ(0vmin);
+}
+
+.cam:nth-child(3):hover~.content {
+    transform: rotateX(10deg) rotateY(10deg) translateZ(0vmin);
+}
+
+.cam:nth-child(4):hover~.content {
+    transform: rotateX(0deg) rotateY(-10deg) translateZ(0vmin);
+}
+
+.cam:nth-child(5):hover~.content {
+    transform: rotateX(0deg) rotateY(0deg) translateZ(0vmin);
+}
+
+.cam:nth-child(6):hover~.content {
+    transform: rotateX(0deg) rotateY(10deg) translateZ(0vmin);
+}
+
+.cam:nth-child(7):hover~.content {
+    transform: rotateX(-10deg) rotateY(-10deg) translateZ(0vmin);
+}
+
+.cam:nth-child(8):hover~.content {
+    transform: rotateX(-10deg) rotateY(0deg) translateZ(0vmin);
+}
+
+.cam:nth-child(9):hover~.content {
+    transform: rotateX(-10deg) rotateY(10deg) translateZ(0vmin);
+} */
+
+.cam:hover~.content {
+    transition: all 1s ease 0s;
+}
+
+.cam:active~.content .door .cuboid.left {
+    left: -53vmin;
+}
+
+.cam:active~.content .door .cuboid.right {
+    left: 62vmin;
+}
+
+.cam:after {
+    content: "";
+    position: absolute;
+    width: 2vmin;
+    height: 2vmin;
+    border: 1vmin solid #fff;
+    border-color: #fff #fff #fff0 #fff0;
+    border-width: 1vmin 1vmin 0 0;
+    border-radius: 0.25vmin;
+    transform: rotate(-90deg);
+    left: 1vmin;
+    top: 1vmin;
+    opacity: 0.15;
+}
+
+.cam:nth-child(2):after {
+    transform: rotate(-45deg);
+    left: calc(50% - 1vmin);
+    top: 1.5vmin;
+}
+
+.cam:nth-child(3):after {
+    transform: rotate(0deg);
+    right: 1vmin;
+    left: inherit;
+}
+
+.cam:nth-child(4):after {
+    transform: rotate(-135deg);
+    top: calc(50% - 1vmin);
+}
+
+.cam:nth-child(5):after {
+    display: none;
+}
+
+
+
+.cam:nth-child(6):after {
+    transform: rotate(45deg);
+    top: calc(50% - 1vmin);
+    right: 1vmin;
+    left: inherit;
+}
+
+.cam:nth-child(7):after {
+    transform: rotate(-180deg);
+    top: calc(100% - 4vmin);
+}
+
+.cam:nth-child(8):after {
+    transform: rotate(135deg);
+    left: calc(50% - 1vmin);
+    top: calc(100% - 4.5vmin);
+}
+
+
+.cam:nth-child(9):after {
+    transform: rotate(90deg);
+    top: calc(100% - 4vmin);
+    right: 1vmin;
+    left: inherit;
+}
+
+.cam:hover:after {
+    opacity: 0.75;
+}

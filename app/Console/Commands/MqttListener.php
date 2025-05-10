@@ -6,6 +6,8 @@ use App\Jobs\MqttSubscribeJob;
 use App\Models\Esps;
 use App\Models\Linhas;
 use App\Models\LinhasEsps;
+use App\Models\Registro;
+use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 
@@ -39,22 +41,53 @@ class MqttListener extends Command
         $mqtt = new \PhpMqtt\Client\MqttClient($server, $port, $clientId);
         $mqtt->connect();
         echo sprintf("Mqtt Conected With Success " . $clientId);
-        $mqtt->subscribe('jws/#', function ($topic, $message, $retained, $matchedWildcards) {
-            $data = [];
+        $mqtt->subscribe('rfid/uid', function ($topic, $code, $retained, $matchedWildcards) {
+            $code = str_replace(' ', '', $code);
 
-            if (str_contains($topic, "data")) {
-                $data['data'] = json_decode($message, true);
+            $user = User::where('CODE', $code)->first();
 
+            if ($user) {
+                // Verifica se já existe um registro de hoje sem SAÍDA
+                $registroExistente = Registro::where('CODUSU', $user->CODUSU)
+                    ->whereDate('ENTRADA', now()->toDateString())
+                    ->whereNull('SAIDA')
+                    ->first();
+
+                if ($registroExistente) {
+                    // Atualiza a saída
+                    $registroExistente->update([
+                        'SAIDA' => now(),
+                    ]);
+
+                    echo "Saída registrada para o usuário {$user->name}\n";
+                } else {
+                    // Cria um novo registro de entrada
+                    Registro::create([
+                        'CODUSU' => $user->CODUSU,
+                        'ENTRADA' => now(),
+                    ]);
+
+                    echo "Entrada registrada para o usuário {$user->name}\n";
+                }
+            } else {
+                echo "Usuário não encontrado para o código: $code\n";
             }
 
-            if (str_contains($topic, "device")) {
-                $data['device'] = json_decode($message, true);
-            }
 
-            if (str_contains($topic, "error")) {
-                $data['error'] = json_decode($message, true);
-            }
-            echo sprintf("Received message on topic [%s]: %s\n", $topic, json_encode($data));
+            // $data = [];
+            // if (str_contains($topic, "data")) {
+            //     $data['data'] = json_decode($message, true);
+
+            // }
+
+            // if (str_contains($topic, "device")) {
+            //     $data['device'] = json_decode($message, true);
+            // }
+
+            // if (str_contains($topic, "error")) {
+            //     $data['error'] = json_decode($message, true);
+            // }
+            // echo sprintf("Received message on topic [%s]: %s\n", $topic, json_encode($data));
 
             // MqttSubscribeJob::dispatch($data);
         }, 1);

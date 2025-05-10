@@ -8,12 +8,32 @@ use Illuminate\Http\Request;
 
 class RegistroController extends Controller
 {
+    public function getRegister()
+    {
+        return response()->json(Registro::whereHas('user', function ($query) {
+            $query->where('email', 'admin@gmail.com');
+        })->latest()->first());
+    }
+
+    public function getRegisterNotUserPermission()
+    {
+        return response()->json(Registro::whereHas('user', function ($query) {
+            $query->where('email', 'clay@gmail.com');
+        })->latest()->first());
+    }
+
     /**
      * Listar todos os registros.
      */
     public function index()
     {
-        $registros = Registro::with('user')->latest()->get();
+        $registros = Registro::with('user')
+            ->whereDoesntHave('user', function ($query) {
+                $query->where('email', 'clay@gmail.com');
+            })
+            ->latest()
+            ->get();
+
 
         $activeCount = $registros->whereNotNull('ENTRADA')->whereNull('SAIDA')->count();
         $closedCount = $registros->whereNotNull('ENTRADA')->whereNotNull('SAIDA')->count();
@@ -84,9 +104,20 @@ class RegistroController extends Controller
     /**
      * Remover registro.
      */
-    public function destroy(Registro $registro)
+    public function destroy($registroId)
     {
-        $registro->delete();
-        return redirect()->route('registros.index')->with('success', 'Registro removido com sucesso.');
+        // Encontra o registro pelo ID
+        $registro = Registro::find($registroId);
+
+        if ($registro) {
+            // Deleta o registro
+            $registro->delete();
+
+            // Retorna uma resposta de sucesso
+            return response()->json(['message' => 'Registro removido com sucesso.'], 200);
+        }
+
+        // Caso o registro não seja encontrado
+        return response()->json(['message' => 'Registro não encontrado.'], 404);
     }
 }

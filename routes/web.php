@@ -21,8 +21,14 @@ Route::get('/', function () {
     return redirect()->route('registros.index');;
 })->middleware(['auth', 'verified'])->name('home');
 
+Route::get('simulation-port', function () {
+    return view('pages.porta.index');
+});
+
 Route::middleware('auth')->group(function () {
     Route::resource('registros', RegistroController::class);
+    Route::get('registro/getRegister', [RegistroController::class, 'getRegister']);
+    Route::get('registro/getRegisterNotUserPermission', [RegistroController::class, 'getRegisterNotUserPermission']);
     Route::resource('usuarios', UserController::class);
 });
 

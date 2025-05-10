@@ -10,12 +10,12 @@
     <div class="page-header d-print-none">
         <div class="container-xl">
             <div class="row row-cards mb-4">
-                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                <div class="col-sm-6 col-lg-4">
                     <div class="card card-sm">
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-auto">
-                                    <span class="bg-primary text-white avatar">
+                                    <span class="bg-azure text-white avatar">
                                         <i class="ti ti-notes icon"></i>
                                     </span>
                                 </div>
@@ -25,6 +25,48 @@
                                     </div>
                                     <div class="text-secondary">
                                         Total de registros: {{ $registros->count() }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <div class="card card-sm">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <span class="bg-green text-white avatar">
+                                        <i class="ti ti-lock-open-2 icon"></i>
+                                    </span>
+                                </div>
+                                <div class="col">
+                                    <div class="font-weight-medium">
+                                        Registros
+                                    </div>
+                                    <div class="text-secondary">
+                                        Total de ativos: {{ $activeCount }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <div class="card card-sm">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <span class="bg-primary text-white avatar">
+                                        <i class="ti ti-lock icon"></i>
+                                    </span>
+                                </div>
+                                <div class="col">
+                                    <div class="font-weight-medium">
+                                        Registros
+                                    </div>
+                                    <div class="text-secondary">
+                                        Total de finalizados: {{ $closedCount }}
                                     </div>
                                 </div>
                             </div>
@@ -41,15 +83,6 @@
                     <h2 class="page-title">
                         Registros de Entrada e Saída
                     </h2>
-                </div>
-
-                <div class="col-auto ms-auto">
-                    <a href="{{ route('registros.create') }}" class="btn bg-blue text-blue-fg d-none d-sm-inline-block">
-                        Novo Registro
-                    </a>
-                    <a href="{{ route('registros.create') }}" class="btn btn-primary d-sm-none btn-icon">
-                        <i class="ti icon ti-plus"></i>
-                    </a>
                 </div>
             </div>
         </div>

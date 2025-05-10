@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return redirect()->route('despesas.index');;
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', function () {
+    return redirect()->route('registros.index');;
+})->middleware(['auth', 'verified'])->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::resource('registros', RegistroController::class);

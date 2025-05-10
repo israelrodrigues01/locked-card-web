@@ -36,6 +36,7 @@ class UserController extends Controller
         ]);
 
         User::create([
+            'CODE' => $request->CODE,
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
@@ -63,16 +64,17 @@ class UserController extends Controller
     /**
      * Atualizar o usuário.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, string $cod)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->CODUSU,
-            'password' => 'nullable|string',
-        ]);
+        $user = User::find($cod);
+
+        if (!$user) {
+            return redirect()->route('usuarios.index')->with('error', 'Usuário não encontrado.');
+        }
 
         $user->update([
             'name' => $request->name,
+            'CODE' => $request->CODE,
             'email' => $request->email,
             'password' => $request->password ? bcrypt($request->password) : $user->password,
         ]);

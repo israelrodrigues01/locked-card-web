@@ -14,7 +14,12 @@ class RegistroController extends Controller
     public function index()
     {
         $registros = Registro::with('user')->latest()->get();
-        return view('pages.registros.index', compact('registros'));
+
+        $activeCount = $registros->whereNotNull('ENTRADA')->whereNull('SAIDA')->count();
+        $closedCount = $registros->whereNotNull('ENTRADA')->whereNotNull('SAIDA')->count();
+
+
+        return view('pages.registros.index', compact('registros', 'activeCount', 'closedCount'));
     }
 
     /**

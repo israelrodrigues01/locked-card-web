@@ -37,6 +37,7 @@
                             <tr>
                                 <th>Nome</th>
                                 <th>Email</th>
+                                <th>Código</th>
                                 <th>Data de Criação</th>
                                 <th width="10%">Ações</th>
                             </tr>
@@ -46,10 +47,11 @@
                                 <tr>
                                     <td class="align-middle">{{ $user->name }}</td>
                                     <td class="align-middle">{{ $user->email }}</td>
+                                    <td class="align-middle">{{ $user->CODE }}</td>
                                     <td class="align-middle">{{ $user->created_at->format('d/m/Y H:i') }}</td>
                                     <td>
                                         <a href="#" class="btn btn-icon btn-primary" data-bs-toggle="offcanvas"
-                                            data-bs-target="#offcanvasUsuarioEdit" title="Editar">
+                                            data-bs-target="#offcanvasUsuarioEdit-{{ $user->CODUSU }}" title="Editar">
                                             <i class="ti ti-edit icon"></i>
                                         </a>
                                         <form action="{{ route('usuarios.destroy', $user->CODUSU) }}" method="POST"
@@ -65,7 +67,8 @@
                                 </tr>
 
                                 <!-- Offcanvas para edit usuário -->
-                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasUsuarioEdit"
+                                <div class="offcanvas offcanvas-end" tabindex="-1"
+                                    id="offcanvasUsuarioEdit-{{ $user->CODUSU }}"
                                     aria-labelledby="offcanvasUsuarioEditLabel">
                                     <div class="offcanvas-header">
                                         <h2 class="offcanvas-title" id="offcanvasUsuarioEditLabel">Editar Usuário</h2>
@@ -88,6 +91,13 @@
                                                 <label class="form-label">Email</label>
                                                 <input type="email" name="email" class="form-control"
                                                     placeholder="Digite o Email" value="{{ $user->email }}" required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Código de acesso</label>
+                                                <input type="text" name="CODE" class="form-control"
+                                                    placeholder="Digite o código de acesso" value="{{ $user->CODE }}"
+                                                    required>
                                             </div>
 
                                             <div class="mb-3" id="campoSenha">
@@ -134,6 +144,12 @@
                     <label class="form-label">Email</label>
                     <input type="email" name="email" class="form-control" value="{{ old('email') }}"
                         placeholder="Digite o Email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Código de acesso</label>
+                    <input type="text" name="CODE" class="form-control" placeholder="Digite o código de acesso"
+                        value="{{ old('CODE') }}" required>
                 </div>
 
                 <div class="mb-3" id="campoSenha">

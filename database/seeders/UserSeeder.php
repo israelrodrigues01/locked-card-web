@@ -22,10 +22,15 @@ class UserSeeder extends Seeder
             ],
         ];
 
-        $uniqueColumns = ['id'];
+        foreach ($users as $user) {
+            $userExist = User::where('email', $user['email'])->first();
 
-        $updateColumns = ['name', 'email', 'password'];
+            if ($userExist) {
+                $userExist->update($user);
+                continue;
+            }
 
-        User::upsert($users, $uniqueColumns, $updateColumns);
+            User::create($user);
+        }
     }
 }

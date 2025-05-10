@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->uuid('CODUSU')->primary();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+        Schema::create('REGISTROS', function (Blueprint $table) {
+            $table->uuid('CODREGIS')->primary();
+
+            $table->uuid('CODUSU');
+            $table->foreign('CODUSU')->references('CODUSU')->on('users')->onDelete('cascade');
+
+            $table->timestamp('ENTRADA')->nullable();
+            $table->timestamp('SAIDA')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('REGISTROS');
     }
 };
